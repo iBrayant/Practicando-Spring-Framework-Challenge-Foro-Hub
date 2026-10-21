@@ -10,8 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 
 @Service
 public class TokenService {
@@ -38,7 +37,7 @@ public class TokenService {
 
     public String getSubject(String token) {
         if (token == null) {
-            throw new RuntimeException("Token nulo");
+            throw new TokenInvalidoException("Token nulo");
         }
         DecodedJWT verifier;
         try {
@@ -49,11 +48,11 @@ public class TokenService {
                     .verify(token);
             return verifier.getSubject();
         } catch (JWTVerificationException exception) {
-            throw new RuntimeException("Token JWT inválido o expirado!");
+            throw new TokenInvalidoException("Token JWT inválido o expirado");
         }
     }
 
     private Instant generarFechaExpiracion() {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-05:00"));
+        return Instant.now().plus(2, ChronoUnit.HOURS);
     }
 } 

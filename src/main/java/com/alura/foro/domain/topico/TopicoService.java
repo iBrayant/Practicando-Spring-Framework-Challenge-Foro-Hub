@@ -4,6 +4,7 @@ import com.alura.foro.domain.curso.Curso;
 import com.alura.foro.domain.curso.CursoRepository;
 import com.alura.foro.domain.usuario.Usuario;
 import com.alura.foro.domain.usuario.UsuarioRepository;
+import com.alura.foro.infra.errores.ReglaDeNegocioException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,8 +26,8 @@ public class TopicoService {
 
     @Transactional
     public DatosRespuestaTopico registrarTopico(DatosRegistroTopico datos) {
-        if (topicoRepository.existsByTituloAndMensaje(datos.titulo(), datos.mensaje())) {
-            throw new RuntimeException("Ya existe un tópico con el mismo título y mensaje");
+        if (topicoRepository.existsByTituloAndMensajeAndActivoTrue(datos.titulo(), datos.mensaje())) {
+            throw new ReglaDeNegocioException("Ya existe un tópico con el mismo título y mensaje");
         }
 
         Usuario autor = (Usuario) usuarioRepository.findById(datos.autorId())
@@ -52,14 +53,14 @@ public class TopicoService {
     }
 
     public DatosRespuestaTopico obtenerTopico(Long id) {
-        var topico = topicoRepository.findById(id)
+        var topico = topicoRepository.findByIdAndActivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Tópico no encontrado"));
         return new DatosRespuestaTopico(topico);
     }
 
     @Transactional
     public DatosRespuestaTopico actualizarTopico(DatosActualizarTopico datos) {
-        var topico = topicoRepository.findById(datos.id())
+        var topico = topicoRepository.findByIdAndActivoTrue(datos.id())
                 .orElseThrow(() -> new EntityNotFoundException("Tópico no encontrado"));
 
         topico.actualizar(datos.titulo(), datos.mensaje());
@@ -69,7 +70,7 @@ public class TopicoService {
 
     @Transactional
     public void eliminarTopico(Long id) {
-        var topico = topicoRepository.findById(id)
+        var topico = topicoRepository.findByIdAndActivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Tópico no encontrado"));
         
         topico.desactivar();

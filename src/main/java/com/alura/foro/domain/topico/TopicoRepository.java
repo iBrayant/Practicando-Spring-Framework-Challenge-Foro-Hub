@@ -5,6 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 public interface TopicoRepository extends JpaRepository<Topico, Long> {
     
     Page<Topico> findByActivoTrue(Pageable paginacion);
@@ -16,5 +18,7 @@ public interface TopicoRepository extends JpaRepository<Topico, Long> {
             """)
     Page<Topico> findByCursoNombre(String nombreCurso, Pageable paginacion);
     
-    boolean existsByTituloAndMensaje(String titulo, String mensaje);
+    boolean existsByTituloAndMensajeAndActivoTrue(String titulo, String mensaje);
+
+    Optional<Topico> findByIdAndActivoTrue(Long id);
 } 

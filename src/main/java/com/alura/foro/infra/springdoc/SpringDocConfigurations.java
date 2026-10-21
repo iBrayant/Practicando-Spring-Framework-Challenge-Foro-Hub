@@ -23,13 +23,13 @@ public class SpringDocConfigurations {
                                         .scheme("bearer")
                                         .bearerFormat("JWT")))
                 .info(new Info()
-                        .title("API Foro Alura")
-                        .description("API REST de la aplicación Foro Alura, que contiene las funcionalidades de CRUD de tópicos, además de permitir la autenticación de usuarios.")
+                        .title("Foro Hub API")
+                        .description("API REST de un foro de discusión: autenticación con JWT y gestión de tópicos (registro, consulta paginada, actualización y borrado lógico).")
                         .contact(new Contact()
-                                .name("Equipo Backend")
-                                .email("backend@alura.com"))
+                                .name("Brayant Vásquez Gómez")
+                                .url("https://github.com/iBrayant"))
                         .license(new License()
-                                .name("Apache 2.0")
-                                .url("http://foro.alura/api/licencia")));
+                                .name("MIT")
+                                .url("https://opensource.org/license/mit")));
     }
 } 
