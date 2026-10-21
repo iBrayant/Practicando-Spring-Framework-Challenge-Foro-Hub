@@ -142,6 +142,6 @@ Las pruebas de integración usan H2 en memoria (modo MySQL) y cubren login, aute
 
 ## Autor
 
-**Brayant Vásquez Gómez** · [GitHub](https://github.com/iBrayant) · [LinkedIn](https://linkedin.com/in/brayant-vásquez-gómez)
+**Brayant Vásquez Gómez** · [GitHub](https://github.com/iBrayant) · [LinkedIn](https://www.linkedin.com/in/brayant-v%C3%A1squez-g%C3%B3mez-4b483a1a1)
 
 Licencia [MIT](LICENSE).
